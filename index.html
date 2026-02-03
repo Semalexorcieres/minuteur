@@ -2,72 +2,116 @@
 <html>
 <head>
   <meta charset="utf-8"/>
-  <title>Minuteur long</title>
+  <title>Tour de France – Étape Orcières</title>
+
   <style>
     body{
-      font-family:system-ui,Arial;
+      margin:0;
+      height:100vh;
       display:flex;
       align-items:center;
       justify-content:center;
-      height:100vh;
-      margin:0;
-      background:#214E92; /* ton bleu */
-      color:#fff;
+      background:#FFD900;
+      font-family: Arial, Helvetica, sans-serif;
+      color:#000;
     }
-    .box{
-      background:#fff;
-      color:#214E92;
-      padding:30px;
-      border-radius:12px;
-      box-shadow:0 6px 24px rgba(0,0,0,.15);
-      text-align:center;
+
+    .container{
+      text-align:left;
+      transform: rotate(-6deg);
     }
-    h1{
-      margin:0 0 10px;
+
+    .badge{
+      display:inline-block;
+      background:#000;
+      color:#FFD900;
+      padding:10px 18px;
       font-size:22px;
-    }
-    .time{
-      font-size:32px;
       font-weight:700;
-      margin-top:10px;
+      margin-bottom:14px;
+      text-transform:uppercase;
     }
-    #label{
-      font-size:14px;
-      margin-bottom:10px;
-      color:#444;
+
+    .title{
+      font-size:42px;
+      font-weight:900;
+      line-height:1.05;
+      margin-bottom:18px;
+      text-transform:uppercase;
+    }
+
+    .distance{
+      display:inline-block;
+      background:#fff;
+      color:#000;
+      padding:10px 18px;
+      font-size:28px;
+      font-weight:700;
+      margin-bottom:30px;
+    }
+
+    .timer{
+      transform: rotate(6deg);
+      font-size:34px;
+      font-weight:900;
+    }
+
+    .date{
+      font-size:16px;
+      margin-top:8px;
+      font-weight:600;
     }
   </style>
 </head>
+
 <body>
-  <div class="box">
-    <h1>Compte à rebours</h1>
-    <div id="label">Fin le : <span id="target"></span></div>
-    <div class="time" id="count">—</div>
+
+  <div class="container">
+    <div class="badge">ÉTAPE 18</div>
+
+    <div class="title">
+      VOIRON »<br>
+      ORCIÈRES-MERLETTE
+    </div>
+
+    <div class="distance">185 km</div>
+
+    <div class="timer" id="count">—</div>
+    <div class="date">Arrivée le <span id="target"></span></div>
   </div>
 
   <script>
-    // --- date cible ---
-    const targetISO = '2026-07-23T17:00:00';
+    const targetISO = '2026-07-23T17:00:00+02:00';
     const target = new Date(targetISO);
-    document.getElementById('target').textContent = target.toLocaleString('fr-FR');
 
-    function pad(n){return String(n).padStart(2,'0');}
+    document.getElementById('target').textContent =
+      target.toLocaleDateString('fr-FR', {
+        day:'numeric',
+        month:'long',
+        year:'numeric'
+      });
+
+    function pad(n){ return String(n).padStart(2,'0'); }
+
     function update(){
       const now = new Date();
       let diff = Math.max(0, target - now);
-      const days = Math.floor(diff / (1000*60*60*24));
-      diff -= days * (1000*60*60*24);
-      const hours = Math.floor(diff / (1000*60*60));
-      diff -= hours * (1000*60*60);
-      const mins = Math.floor(diff / (1000*60));
-      diff -= mins * (1000*60);
+
+      const days = Math.floor(diff / 86400000);
+      diff -= days * 86400000;
+      const hours = Math.floor(diff / 3600000);
+      diff -= hours * 3600000;
+      const mins = Math.floor(diff / 60000);
+      diff -= mins * 60000;
       const secs = Math.floor(diff / 1000);
+
       document.getElementById('count').textContent =
-        days + 'j ' + pad(hours) + 'h:' + pad(mins) + 'm:' + pad(secs) + 's';
-      if (target - now <= 0) clearInterval(timer);
+        `${days}j ${pad(hours)}h ${pad(mins)}m ${pad(secs)}s`;
     }
+
     update();
-    const timer = setInterval(update, 1000);
+    setInterval(update, 1000);
   </script>
+
 </body>
 </html>
