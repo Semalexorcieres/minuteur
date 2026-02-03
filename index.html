@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8"/>
-  <title>Tour de France – Étape Orcières</title>
+  <title>Minuteur Tour de France</title>
 
   <style>
     body{
@@ -11,85 +11,27 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      background:#FFD900;
+      background:#FFD900; /* jaune TdF */
       font-family: Arial, Helvetica, sans-serif;
       color:#000;
     }
 
-    .container{
-      text-align:left;
-      transform: rotate(-6deg);
-    }
-
-    .badge{
-      display:inline-block;
-      background:#000;
-      color:#FFD900;
-      padding:10px 18px;
-      font-size:22px;
-      font-weight:700;
-      margin-bottom:14px;
-      text-transform:uppercase;
-    }
-
-    .title{
-      font-size:42px;
-      font-weight:900;
-      line-height:1.05;
-      margin-bottom:18px;
-      text-transform:uppercase;
-    }
-
-    .distance{
-      display:inline-block;
-      background:#fff;
-      color:#000;
-      padding:10px 18px;
-      font-size:28px;
-      font-weight:700;
-      margin-bottom:30px;
-    }
-
     .timer{
-      transform: rotate(6deg);
-      font-size:34px;
+      font-size:96px;
       font-weight:900;
-    }
-
-    .date{
-      font-size:16px;
-      margin-top:8px;
-      font-weight:600;
+      letter-spacing:2px;
+      text-align:center;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
-    <div class="badge">ÉTAPE 18</div>
-
-    <div class="title">
-      VOIRON »<br>
-      ORCIÈRES-MERLETTE
-    </div>
-
-    <div class="distance">185 km</div>
-
-    <div class="timer" id="count">—</div>
-    <div class="date">Arrivée le <span id="target"></span></div>
-  </div>
+  <div class="timer" id="count">—</div>
 
   <script>
     const targetISO = '2026-07-23T17:00:00+02:00';
     const target = new Date(targetISO);
-
-    document.getElementById('target').textContent =
-      target.toLocaleDateString('fr-FR', {
-        day:'numeric',
-        month:'long',
-        year:'numeric'
-      });
 
     function pad(n){ return String(n).padStart(2,'0'); }
 
